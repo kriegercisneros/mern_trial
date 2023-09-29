@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const auth = require('./routes/auth')
 const cors = require('cors');
+const session = require('express-session')
 
 const port = process.env.PORT || 3000;
 
@@ -22,12 +23,19 @@ db.on('error', (err) => {
 });
 
 app.use(cors({
-    origin: '*', // You can specify your frontend's domain here for better security.
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // or whatever methods you want to allow
-    allowedHeaders: ['Content-Type'] // or whichever headers you want to allow
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type'] 
 }));
 
 app.use(express.json())
+
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Set to true if using HTTPS
+  }));
 
 app.use('/api/auth', auth)
 

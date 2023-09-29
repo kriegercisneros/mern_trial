@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import getConfig from 'next/config';
-
+import Router from 'next/router'
 
 class Login extends Component {
     constructor(){
@@ -32,6 +32,7 @@ class Login extends Component {
             console.log("Response received:", resp);
             if(resp.ok){
                 console.log('login success');
+                Router.push('/logout')
             } else {
                 return resp.json().then(data => {
                     throw new Error(data.message || 'Login failed');
