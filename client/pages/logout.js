@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import getConfig from 'next/config';
+import Router from 'next/router'
 
 class Logout extends Component {
     constructor(){
@@ -15,11 +16,11 @@ class Logout extends Component {
                 'Content-Type': 'application/json'
             },
         })
-        .then((resp)=>{
-            if(resp.ok){
-                window.location.href = '/'
-            }else {
-                console.error('logout failed')
+        .then((resp)=>resp.json())
+        .then(data=>{
+            if(data.message){
+                console.log(data.message);
+                Router.push('/')
             }
         })
         .catch((error)=>{

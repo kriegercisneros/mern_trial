@@ -35,7 +35,16 @@ router.post('/login', async (req, res) => {
 
 
 router.post('/logout', async (req, res) => {
-
+    if(req.session){
+        req.session.destroy(err=>{
+            if(err){
+                return res.status(500).json({message:'internal server error'});
+            }
+            res.status(200).json({message:'logged out successfully'})
+        });
+    }else {
+        res.status(400).json({message:'Not logged in'})
+    }
 })
 
 module.exports = router;
