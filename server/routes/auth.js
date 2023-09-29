@@ -19,7 +19,10 @@ router.post('/login', async (req, res) => {
     
       if (passwordMatch) {
         console.log('Authentication successful');
-        res.status(200).json({ message: 'Login successful' });
+        req.session.userId = user._id;
+        req.session.isAuthenticated = true;
+
+        res.status(200).json({ message: `Login successful, session_id is ${req.session.userId}` });
       } else {
         console.log('Authentication failed');
         res.status(401).json({ message: 'Incorrect password' });
@@ -32,7 +35,7 @@ router.post('/login', async (req, res) => {
 
 
 router.post('/logout', async (req, res) => {
-    
+
 })
 
 module.exports = router;

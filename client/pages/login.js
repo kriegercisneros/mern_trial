@@ -28,19 +28,21 @@ class Login extends Component {
             },
             body: JSON.stringify({email:email, password:password}),
         })
-        .then((resp)=>{
+        .then((resp) => {
             console.log("Response received:", resp);
-            if(resp.ok){
+            return resp.json();  // This parses the JSON data from the response
+        })
+        .then((data) => {
+            console.log(data.message);  // This will print the message from the server
+            if (data.message.includes("Login successful")) {
                 console.log('login success');
-                Router.push('/logout')
+                Router.push('/logout');
             } else {
-                return resp.json().then(data => {
-                    throw new Error(data.message || 'Login failed');
-                });
+                throw new Error(data.message || 'Login failed');
             }
         })
-        .catch((error)=>{
-            console.error('error:', error)
+        .catch((error) => {
+            console.error('error:', error);
         });
     };
 

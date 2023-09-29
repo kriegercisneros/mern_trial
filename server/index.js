@@ -5,6 +5,8 @@ const auth = require('./routes/auth')
 const cors = require('cors');
 const session = require('express-session')
 
+require('dotenv').config()
+
 const port = process.env.PORT || 3000;
 
 mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
@@ -31,7 +33,7 @@ app.use(cors({
 app.use(express.json())
 
 app.use(session({
-    secret: 'your_secret_key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }  // Set to true if using HTTPS
