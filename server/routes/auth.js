@@ -19,8 +19,10 @@ router.post('/login', async (req, res) => {
     
       if (passwordMatch) {
         console.log('Authentication successful');
+        res.status(200).json({ message: 'Login successful' });
       } else {
         console.log('Authentication failed');
+        res.status(401).json({ message: 'Incorrect password' });
       }
     } catch (error) {
       console.error(error);

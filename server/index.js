@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
@@ -21,11 +21,17 @@ db.on('error', (err) => {
     console.error('MongoDB connection error:', err);
 });
 
+app.use(cors({
+    origin: '*', // You can specify your frontend's domain here for better security.
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // or whatever methods you want to allow
+    allowedHeaders: ['Content-Type'] // or whichever headers you want to allow
+}));
+
 app.use(express.json())
-app.use(cors())
+
+app.use('/api/auth', auth)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
 
-app.use('/api/auth', auth)

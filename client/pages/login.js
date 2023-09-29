@@ -29,10 +29,13 @@ class Login extends Component {
             body: JSON.stringify({email:email, password:password}),
         })
         .then((resp)=>{
+            console.log("Response received:", resp);
             if(resp.ok){
                 console.log('login success');
             } else {
-                console.error('Login failed')
+                return resp.json().then(data => {
+                    throw new Error(data.message || 'Login failed');
+                });
             }
         })
         .catch((error)=>{
