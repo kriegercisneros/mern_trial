@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import getConfig from 'next/config';
 import Router from 'next/router'
-
+//instead of useState and useEffect (the react hooks) as funtional components, I am 
+//using inheritance and the built in Component class in React, just to better understand
+//OOP and inheritance
 class Login extends Component {
     constructor(){
         super();
